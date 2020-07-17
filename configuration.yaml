@@ -11,14 +11,14 @@ camera:
 # Example configuration.yaml entry for the Telegram Bot
 telegram_bot:
   - platform: polling
-    api_key: 1194049919:AAEC_sgl94lgVhFnWCcse9HXegC3A4_eZbY
+    api_key: ***
     allowed_chat_ids:
-      - 1154840631
+      - ****
 notify: 
  - name: Telegram 
    platform: telegram 
-   api_key: 1194049919:AAEC_sgl94lgVhFnWCcse9HXegC3A4_eZbY 
-   chat_id: 1154840631
+   api_key: ****
+   chat_id: ****
 automation:
   alias: Doorbell_pressed_automation 
   trigger: 
