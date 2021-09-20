@@ -1,0 +1,69 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+# Example configuration.yaml entry
+camera:
+  - platform: mqtt
+    topic: dev/camera
+#telegram stuff
+telegram_bot:
+  - platform: polling
+    api_key: KEYHERE
+    allowed_chat_ids:
+      - PERSONALID
+      - -GROUP
+notify:
+ - name: Telegram
+   platform: telegram
+   chat_id: -GROUP
+#automation
+automation:
+ - alias: Doorbell_pressed_automation 
+   trigger: 
+     platform: mqtt 
+     topic: dev/test
+     payload: 'Capture!' 
+   action: 
+     - service: automation.turn_off 
+       entity_id: automation.doorbell_pressed_automation 
+     - service: script.turn_on 
+       entity_id: script.doorbell_pressed_script 
+     - delay: "00:00:5" 
+     - service: automation.turn_on 
+       entity_id: automation.doorbell_pressed_automation 
+#template:
+ # - trigger:
+#      - platform: mqtt
+#        topic: dev/test
+#        payload: 'Capture!'
+#    sensor:
+#      - name: "Doorbell Pressed at"
+#        state: "{{ now() }}"
+sensor:
+  - platform: mqtt
+    name: "dev_test"
+    state_topic: "dev/test"
+sensor:
+  - platform: template 
+    sensors: 
+      camera_capture_time: 
+      value_template: '{{states.sensor.dev_test.last_updated.strftime("%A %H:%M:%S")}}' 
+      friendly_name: 'Camera captured time'  
+group:
+  Doorbell:
+    name: Doorbell
+    entities: 
+      - sensor.dev_test 
+      - script.dev_publish_on_script 
+      - sensor.camera_capture_time 
+      - camera.mqtt_camera       
+group: !include groups.yaml
+#automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+homeassistant:
+  customize: !include customize.yaml

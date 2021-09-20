@@ -1,0 +1,14 @@
+doorbell_pressed_script: 
+ sequence: 
+   - service: notify.Telegram 
+     data: 
+       title: Home Assistant Notification 
+       message: --Doorbell Pressed-- 
+       data: 
+         photo: 
+           - url: http://192.168.1.15/images/image.jpg 
+             caption: Doorbell View 
+dev_publish_on_script: 
+ sequence: 
+   - service: mqtt.publish 
+     data: {"topic":"dev/test", "payload":"ON"}  
