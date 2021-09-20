@@ -1,4 +1,0 @@
-script:
-  script.dev_publish_on_script: 
-   friendly_name: 'Capture doorcam photo' 
-   icon: mdi:camera 
